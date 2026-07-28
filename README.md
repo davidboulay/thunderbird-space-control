@@ -12,6 +12,26 @@ back through session restore).
 Built and verified against **Betterbird 140.13.0esr-bb25** (Thunderbird 140 ESR).
 The manifest is pinned to `140.*` — see [Compatibility](#compatibility).
 
+## What it looks like
+
+The spaces toolbar with everything switched on, and with Calendar, Tasks and
+Chat switched off — Address Book kept:
+
+<table>
+<tr><th align="left">Before</th><th align="left">After</th></tr>
+<tr valign="top">
+<td><img src="docs/spaces-before.png" width="300"
+         alt="Spaces toolbar showing Mail, Address Book, Calendar, Tasks and Chat"></td>
+<td><img src="docs/spaces-after.png" width="300"
+         alt="The same toolbar with only Mail and Address Book left"></td>
+</tr>
+</table>
+
+Picking what to keep, from **Tools → Space Control…**:
+
+<img src="docs/settings.png" width="900"
+     alt="The Space Control settings panel, with Mail and Settings marked as always kept, Address Book ticked, and Calendar, Tasks and Chat unticked">
+
 ## How it works
 
 WebExtension APIs cannot touch the main window UI, so the add-on ships a small
