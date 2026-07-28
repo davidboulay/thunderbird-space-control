@@ -1,4 +1,4 @@
-# Space Control
+# Space Control (Thunderbird/Betterbird Add-on)
 
 A Betterbird/Thunderbird MailExtension that lets you choose which spaces you
 keep. Address Book, Calendar, Tasks and Chat can each be switched off; Mail and
@@ -9,8 +9,8 @@ menu, hides its menu entries and toolbar buttons, disables its keyboard
 shortcuts, and closes any of its tabs that are open (including ones that come
 back through session restore).
 
-Built and verified against **Betterbird 140.13.0esr-bb25** (Thunderbird 140 ESR).
-The manifest is pinned to `140.*` — see [Compatibility](#compatibility).
+Verified on **Betterbird 140.13.0esr-bb25** (Thunderbird 140 ESR) and
+**Thunderbird 153.0.1** — see [Compatibility](#compatibility).
 
 ## What it looks like
 
@@ -99,17 +99,44 @@ until you switch something off.
 
 ## Compatibility
 
-Everything this add-on hides is addressed by element ID, and those IDs were read
-out of Thunderbird 140 ESR's `omni.ja`. They move between major versions, and a
-stale ID fails silently — the CSS rule simply stops matching, nothing throws.
-So the manifest is pinned with `strict_max_version: "140.*"` rather than
-pretending to support versions that were never checked. Widening the range means
-re-verifying the IDs first; see below.
+Declared range: **140.0 – 153.\***.
+
+Everything this add-on hides is addressed by element ID, and a stale ID fails
+silently — the CSS rule simply stops matching, nothing throws. So the range is
+only ever as wide as what has actually been checked. Both ends were verified by
+extracting `omni.ja` and confirming that every referenced ID, `item-id`, class,
+`<key>` and tab mode still exists, then running the add-on and confirming it
+really hid things:
+
+| | Betterbird 140.13.0esr | Thunderbird 153.0.1 |
+| --- | --- | --- |
+| All 45 references present | yes | yes |
+| Spaces buttons hidden at runtime | yes | yes |
+| Shortcut keys disabled | yes | yes |
+| Tools menu entry added | yes | yes |
+| Prefs applied | yes | yes |
+
+Nothing changed between those two versions, which is a good sign for the
+releases in between, though they were not individually tested. To widen the
+range further, re-run the checks in
+[If a Betterbird update breaks it](#if-a-betterbird-update-breaks-it) first.
 
 Thunderbird does not require add-ons to be signed on any channel
 (`MOZ_REQUIRE_SIGNING` is off and `xpinstall.signatures.required` defaults to
 false), so installing the XPI straight from Releases is a normal, supported
 thing to do — not a workaround.
+
+### The Experiment API deprecation
+
+Thunderbird plans to stop honouring Experiment APIs on the **Release** channel,
+gated by `extensions.experiments.suppressed` plus an
+`extensions.experiments.allowed` allow-list. In shipped 153.0.1 those are
+`false` and `"tbpro-add-on@thunderbird.net,owl@beonex.com"` respectively, so
+experiments still work today. The switch was announced for 153, then delayed by
+a year to target the 2027 ESR
+([bug 2042677](https://bugzilla.mozilla.org/show_bug.cgi?id=2042677) is still
+open). When it flips, this add-on stops working on Release and keeps working on
+ESR, Beta and Daily — and on Betterbird, which tracks ESR.
 
 ## Publishing status
 
@@ -149,18 +176,31 @@ If that reopens, two things need attention first, both from the ATN
   afterwards, or watch for a real side effect such as
   `calendar.itip.showImipBar`.
 
-## If a Betterbird update breaks it
+## If an update breaks it
 
 Everything hangs off element IDs read out of `omni.ja`. To re-check them after a
-major update:
+major version bump:
 
 ```sh
+# Betterbird flatpak, or org.mozilla.thunderbird / thunderbird_esr
 unzip -o ~/.local/share/flatpak/app/eu.betterbird.Betterbird/current/active/files/lib/betterbird/omni.ja -d /tmp/omni
 grep -n "Button\|menuitem:" /tmp/omni/chrome/messenger/content/messenger/spacesToolbar.js
 grep -rn "hide-when-calendar-deactivated" /tmp/omni/chrome/
 ```
 
-A stale ID makes a CSS rule silently stop matching — nothing throws.
+Then confirm at runtime rather than trusting the greps, because a missing ID is
+silent. Install into a throwaway profile with a config that switches everything
+off, and check that the add-on actually acted:
+
+```sh
+P=/tmp/tb-test; mkdir -p "$P/extensions" "$P/browser-extension-data/space-control@davidboulay"
+printf 'user_pref("extensions.autoDisableScopes", 0);\nuser_pref("extensions.webextensions.ExtensionStorageIDB.enabled", false);\n' > "$P/user.js"
+cp dist/space-control@davidboulay.xpi "$P/extensions/space-control@davidboulay.xpi"
+echo '{"spaces":{"addressbook":false,"calendar":false,"tasks":false,"chat":false}}' \
+  > "$P/browser-extension-data/space-control@davidboulay/storage.js"
+timeout 60 flatpak run org.mozilla.thunderbird -headless -no-remote -profile "$P"
+grep -E "mail.chat.enabled|showImipBar" "$P/prefs.js"   # both present = it ran
+```
 
 ## License
 

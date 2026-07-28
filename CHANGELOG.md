@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.0.3 — 2026-07-28
+
+- Compatibility widened to **140.0 – 153.\*** after verifying the add-on on
+  Thunderbird 153.0.1: every referenced element ID, `item-id`, class, `<key>`
+  and tab mode still exists, and a real run confirmed the spaces buttons get
+  hidden, the shortcuts get disabled, the Tools menu entry appears and the prefs
+  are applied. No code changes were needed.
+- Documented the Experiment API deprecation on the Release channel
+  (`extensions.experiments.suppressed`), currently targeting the 2027 ESR.
+
 ## 1.0.2 — 2026-07-28
 
 First working release.

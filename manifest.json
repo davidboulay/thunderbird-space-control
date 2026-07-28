@@ -1,14 +1,14 @@
 {
   "manifest_version": 2,
   "name": "Space Control",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Choose which Thunderbird spaces you keep: Address Book, Calendar, Tasks and Chat can each be switched off.",
   "author": "David Boulay",
   "browser_specific_settings": {
     "gecko": {
       "id": "space-control@davidboulay",
       "strict_min_version": "140.0",
-      "strict_max_version": "140.*"
+      "strict_max_version": "153.*"
     }
   },
   "permissions": [
