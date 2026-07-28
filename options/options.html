@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Space Control</title>
+    <link rel="stylesheet" href="options.css" />
+  </head>
+  <body>
+    <p class="intro">
+      Pick the spaces you want to keep. Anything you switch off is removed from
+      the spaces toolbar, the menus and the keyboard shortcuts, and its open
+      tabs are closed.
+    </p>
+
+    <ul class="spaces">
+      <li class="space fixed">
+        <span class="tick" aria-hidden="true"></span>
+        <span class="body">
+          <span class="name">Mail</span>
+          <span class="note">Always kept.</span>
+        </span>
+      </li>
+
+      <li class="space">
+        <label>
+          <input type="checkbox" id="addressbook" />
+          <span class="body">
+            <span class="name">Address Book</span>
+            <span class="note">
+              Also hides Tools &rsaquo; Address Book, the New Contact items and
+              Ctrl+Shift+B. Your contacts stay untouched and address
+              autocomplete keeps working.
+            </span>
+          </span>
+        </label>
+      </li>
+
+      <li class="space">
+        <label>
+          <input type="checkbox" id="calendar" />
+          <span class="body">
+            <span class="name">Calendar</span>
+            <span class="note">
+              Also hides the Today pane and the calendar entries in the View and
+              File menus.
+            </span>
+          </span>
+        </label>
+      </li>
+
+      <li class="space">
+        <label>
+          <input type="checkbox" id="tasks" />
+          <span class="body">
+            <span class="name">Tasks</span>
+            <span class="note">
+              Switch off both Calendar and Tasks and the Events and Tasks menu,
+              the invitation bar and the Calendar settings pane go too.
+            </span>
+          </span>
+        </label>
+      </li>
+
+      <li class="space">
+        <label>
+          <input type="checkbox" id="chat" />
+          <span class="body">
+            <span class="name">Chat</span>
+            <span class="note">
+              Sets <code>mail.chat.enabled</code>, so chat stops loading
+              altogether. Needs a restart to fully take effect.
+            </span>
+          </span>
+        </label>
+      </li>
+
+      <li class="space fixed">
+        <span class="tick" aria-hidden="true"></span>
+        <span class="body">
+          <span class="name">Settings</span>
+          <span class="note">Always kept.</span>
+        </span>
+      </li>
+    </ul>
+
+    <div id="restart" class="restart" hidden>
+      <span>Chat was changed. Restart Betterbird to finish applying it.</span>
+      <button id="restart-button" type="button">Restart now</button>
+    </div>
+
+    <script src="options.js"></script>
+  </body>
+</html>

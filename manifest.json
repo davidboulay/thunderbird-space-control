@@ -1,0 +1,53 @@
+{
+  "manifest_version": 2,
+  "name": "Space Control",
+  "version": "1.0.2",
+  "description": "Choose which Thunderbird spaces you keep: Address Book, Calendar, Tasks and Chat can each be switched off.",
+  "author": "David Boulay",
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "space-control@davidboulay",
+      "strict_min_version": "140.0",
+      "strict_max_version": "140.*"
+    }
+  },
+  "permissions": [
+    "storage"
+  ],
+  "background": {
+    "scripts": [
+      "background.js"
+    ]
+  },
+  "options_ui": {
+    "page": "options/options.html",
+    "browser_style": true,
+    "open_in_tab": false
+  },
+  "icons": {
+    "32": "icons/space-control.svg",
+    "48": "icons/space-control.svg",
+    "64": "icons/space-control.svg",
+    "96": "icons/space-control.svg"
+  },
+  "experiment_apis": {
+    "spaceControl": {
+      "schema": "api/schema.json",
+      "parent": {
+        "scopes": [
+          "addon_parent"
+        ],
+        "paths": [
+          [
+            "spaceControl"
+          ]
+        ],
+        "script": "api/implementation.js",
+        "events": [
+          "startup"
+        ]
+      }
+    }
+  },
+  "homepage_url": "https://github.com/davidboulay/thunderbird-space-control"
+}

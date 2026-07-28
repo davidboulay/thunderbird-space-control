@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+  <!-- A spaces toolbar: three kept rows, one switched off. -->
+  <rect x="4" y="3" width="11" height="26" rx="3" fill="#78292E" opacity="0.15"/>
+  <g fill="#78292E">
+    <rect x="6.5" y="5.5" width="6" height="6" rx="1.5"/>
+    <rect x="6.5" y="13.5" width="6" height="6" rx="1.5"/>
+  </g>
+  <rect x="6.5" y="21.5" width="6" height="6" rx="1.5" fill="none" stroke="#78292E"
+        stroke-width="1.2" stroke-dasharray="2 1.6" opacity="0.6"/>
+  <g stroke="#C8C093" stroke-width="2.4" stroke-linecap="round">
+    <path d="M19 9h9"/>
+    <path d="M19 17h9"/>
+    <path d="M19 25h9"/>
+  </g>
+  <g fill="#78292E">
+    <circle cx="26" cy="9" r="2.6"/>
+    <circle cx="23" cy="17" r="2.6"/>
+    <circle cx="26" cy="25" r="2.6"/>
+  </g>
+</svg>
